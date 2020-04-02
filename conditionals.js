@@ -1,4 +1,3 @@
-
 /*
     Conditionals, Logic, and Formatting Practice
 
@@ -20,9 +19,8 @@
     If the number is > 10, return "blue"
     otherwise return "red";
 */
-function getColor(number) {
-    // Uncomment and complete
-    return /* ( Your code Here ) ?  Your code Here  :  Your code Here */;
+function getColor(two) {
+  return two > 10 ? "blue" : "red";
 }
 
 /* 
@@ -50,7 +48,7 @@ console.log(getColor(10) === "red");
     if the brightness is greater than or equal to 200, then return "on"
 */
 function lightStatus(brightness) {
-    return /* Put both ternary statements here, in one line */;
+  return brightness > 0 ? (brightness >= 200 ? "on" : "dimmed") : "off";
 }
 
 /* 
@@ -86,16 +84,33 @@ console.log(lightStatus(255) === "on");
 */
 
 function getLightBulbStatusDisplayString(status) {
-    let result = "";
-    /* uncomment and complete
-    switch( your code here ) {
-      case "your code here": 
-        your code here;
-        break;
-      etc...
-    }
-    */
-    return result;
+  let result;
+  switch (status) {
+    case "on":
+      result = "The house is bright!";
+      break;
+    case "dimmed":
+      result = "The house is nice and dim";
+      break;
+    case "off":
+      result = "The house is dark";
+      break;
+    case "offline":
+    case "missing":
+      result = "The house is dark and we can't find the lightbulb!";
+      break;
+    case "deleted":
+      result = "The lightbulb has been removed from the system";
+      break;
+    case "broken":
+      result = "The house is dark and we can't turn the light on!";
+      break;
+    default:
+      result = "Something is wrong!";
+      break;
+  }
+
+  return result;
 }
 
 /* 
@@ -108,15 +123,29 @@ console.log(getLightBulbStatusDisplayString("on") === "The house is bright!");
 console.log("* Check for off");
 console.log(getLightBulbStatusDisplayString("off") === "The house is dark");
 console.log("* Check for dimmed");
-console.log(getLightBulbStatusDisplayString("dimmed") === "The house is nice and dim");
+console.log(
+  getLightBulbStatusDisplayString("dimmed") === "The house is nice and dim"
+);
 console.log("* Check for offline");
-console.log(getLightBulbStatusDisplayString("offline") === "The house is dark and we can't find the lightbulb!");
+console.log(
+  getLightBulbStatusDisplayString("offline") ===
+    "The house is dark and we can't find the lightbulb!"
+);
 console.log("* Check for missing");
-console.log(getLightBulbStatusDisplayString("missing") === "The house is dark and we can't find the lightbulb!");
+console.log(
+  getLightBulbStatusDisplayString("missing") ===
+    "The house is dark and we can't find the lightbulb!"
+);
 console.log("* Check for deleted");
-console.log(getLightBulbStatusDisplayString("deleted") === "The lightbulb has been removed from the system");
+console.log(
+  getLightBulbStatusDisplayString("deleted") ===
+    "The lightbulb has been removed from the system"
+);
 console.log("* Check for broken");
-console.log(getLightBulbStatusDisplayString("broken") === "The house is dark and we can't turn the light on!");
+console.log(
+  getLightBulbStatusDisplayString("broken") ===
+    "The house is dark and we can't turn the light on!"
+);
 console.log("* Check for empty string");
 console.log(getLightBulbStatusDisplayString("") === "Something is wrong!");
 console.log("* Check for 5");
@@ -150,64 +179,92 @@ console.log(getLightBulbStatusDisplayString(null) === "Something is wrong!");
     They are all booleans.
 
 
-    Implement this logic
-
-    If it's dark out, the porch light should be on.  If it's not dark, then it's off.
-    If nobody home, then turn all the lights off (except the porch light). 
-    If someone is home but they haven't gone to bed, then the living room and dining room lights should be on.
-    if someone is cooking, then the kitchen light should be on.
-    However, if they are watching TV, then turn off the livingroom and dining room lights.
     
-*/
+    */
 
 /*
    -------START OF GIVEN CODE - DO NOT EDIT ------------------------------------
    But do read through through this code.  Try to understand what it's doing.
-*/
+   */
 
 let currentLights = {};
 function resetLights() {
-    currentLights = {
-        "livingRoomLight": "off",
-        "diningRoomLight": "off",
-        "kitchenLight": "off",
-        "frontPorchLight": "off",
-        "bedroomLight": "off"
-    };
+  currentLights = {
+    livingRoomLight: "off",
+    diningRoomLight: "off",
+    kitchenLight: "off",
+    frontPorchLight: "off",
+    bedroomLight: "off"
+  };
 }
 
 function turnOnLight(lightName) {
-    // This turns on a light.
-    if (currentLights[lightName]) {
-        currentLights[lightName] = "on";
-    } else {
-        console.log("WARNING Incorrect light name! - " + lightName);
-    }
+  // This turns on a light.
+  if (currentLights[lightName]) {
+    currentLights[lightName] = "on";
+  } else {
+    console.log("WARNING Incorrect light name! - " + lightName);
+  }
 }
 
 function turnOffLight(lightName) {
-    // This turns off a light.
-    if (currentLights[lightName]) {
-        currentLights[lightName] = "off";
-    } else {
-        console.log("WARNING Incorrect light name! - " + lightName);
-    }
+  // This turns off a light.
+  if (currentLights[lightName]) {
+    currentLights[lightName] = "off";
+  } else {
+    console.log("WARNING Incorrect light name! - " + lightName);
+  }
 }
 /*
-   -------END OF GIVEN CODE - DO NOT EDIT ------------------------------------
+-------END OF GIVEN CODE - DO NOT EDIT ------------------------------------
 */
+// Implement this logic
+
+// If it's dark out, the porch light should be on.  If it's not dark, then it's off.
+// If nobody home, then turn all the lights off (except the porch light).
+// If someone is home but they haven't gone to bed, then the living room and dining room lights should be on.
+// if someone is cooking, then the kitchen light should be on.
+// However, if they are watching TV, then turn off the livingroom and dining room lights.
 
 /* 
-   -------YOUR CODE-----------------------------------------------------------
+-------YOUR CODE-----------------------------------------------------------
 */
-function updateLights(somebodyIsHome, theyAreWatchingTV, itIsDarkOutside, theyAreCooking, theyWentToBed) {
-
-    // Write your code here!  You don't need to return anything, just call the given functions
-    // You should be using if else statements and the function arguments
-    // example of turning a light on
-    turnOnLight("livingRoomLight");
-    // example of turning off a light
+function updateLights(
+  somebodyIsHome,
+  theyAreWatchingTV,
+  itIsDarkOutside,
+  theyAreCooking,
+  theyWentToBed
+) {
+  // Write your code here!  You don't need to return anything, just call the given functions
+  // You should be using if else statements and the function arguments
+  // example of turning a light on
+  if (!somebodyIsHome) {
     turnOffLight("livingRoomLight");
+    turnOffLight("diningRoomLight");
+    turnOffLight("kitchenLight");
+    turnOffLight("bedroomLight");
+    turnOnLight("frontPorchLight");
+  } else {
+    if (!theyWentToBed) {
+      turnOnLight("livingRoomLight");
+      turnOnLight("diningRoomLight");
+    }else{
+        turnOnLight("bedroomLight")
+    }
+    if (theyAreCooking) {
+      turnOnLight("kitchenLight");
+    }
+    if (theyAreWatchingTV) {
+      turnOffLight("livingRoomLight");
+      turnOffLight("diningRoomLight");
+    }
+  }
+  if (itIsDarkOutside) {
+    turnOnLight("frontPorchLight");
+  } else {
+    turnOffLight("frontPorchLight");
+  }
 }
 
 /* 
@@ -218,60 +275,66 @@ console.log("-----Tests for Exercise Four-----");
 
 console.log("* Check if they are all off.");
 resetLights();
-updateLights(false, false, false, false, false)
+updateLights(false, false, false, false, false);
 console.log(
-    currentLights.livingRoomLight == "off" &&
+  currentLights.livingRoomLight == "off" &&
     currentLights.diningRoomLight == "off" &&
     currentLights.kitchenLight == "off" &&
     currentLights.frontPorchLight == "off" &&
-    currentLights.bedroomLight == "off");
+    currentLights.bedroomLight == "off"
+);
 
 console.log("* Check that the porch light turns on at night.");
 resetLights();
-updateLights(false, false, true, false, false)
+updateLights(false, false, true, false, false);
 console.log(
-    currentLights.livingRoomLight == "off" &&
+  currentLights.livingRoomLight == "off" &&
     currentLights.diningRoomLight == "off" &&
     currentLights.kitchenLight == "off" &&
     currentLights.frontPorchLight == "on" &&
-    currentLights.bedroomLight == "off");
+    currentLights.bedroomLight == "off"
+);
 
 console.log("* Check when somebody is home");
 resetLights();
-updateLights(true, false, true, false, false)
+updateLights(true, false, true, false, false);
 console.log(
-    currentLights.livingRoomLight == "on" &&
+  currentLights.livingRoomLight == "on" &&
     currentLights.diningRoomLight == "on" &&
     currentLights.kitchenLight == "off" &&
     currentLights.frontPorchLight == "on" &&
-    currentLights.bedroomLight == "off");
+    currentLights.bedroomLight == "off"
+);
 
 console.log("* Check when they are cooking");
 resetLights();
-updateLights(true, false, true, true, false)
+updateLights(true, false, true, true, false);
 console.log(
-    currentLights.livingRoomLight == "on" &&
+  currentLights.livingRoomLight == "on" &&
     currentLights.diningRoomLight == "on" &&
     currentLights.kitchenLight == "on" &&
     currentLights.frontPorchLight == "on" &&
-    currentLights.bedroomLight == "off");
+    currentLights.bedroomLight == "off"
+);
 
 console.log("* Check when they are watching TV");
 resetLights();
-updateLights(true, true, true, false, false)
+updateLights(true, true, true, false, false);
 console.log(
-    currentLights.livingRoomLight == "off" &&
+  currentLights.livingRoomLight == "off" &&
     currentLights.diningRoomLight == "off" &&
     currentLights.kitchenLight == "off" &&
     currentLights.frontPorchLight == "on" &&
-    currentLights.bedroomLight == "off");
+    currentLights.bedroomLight == "off"
+);
 
 console.log("* Check when they are in bed");
 resetLights();
-updateLights(true, false, true, false, true)
+updateLights(true, false, true, false, true);
 console.log(
-    currentLights.livingRoomLight == "off" &&
+  currentLights.livingRoomLight == "off" &&
     currentLights.diningRoomLight == "off" &&
     currentLights.kitchenLight == "off" &&
     currentLights.frontPorchLight == "on" &&
-    currentLights.bedroomLight == "on");
+    currentLights.bedroomLight == "on"
+);
