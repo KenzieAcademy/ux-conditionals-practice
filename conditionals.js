@@ -20,9 +20,24 @@
     If the number is > 10, return "blue"
     otherwise return "red";
 */
+
+
+
+/* 
 function getColor(number) {
-    // Uncomment and complete
-    return /* ( Your code Here ) ?  Your code Here  :  Your code Here */;
+    if (number > 10) {
+        return "blue"
+    }
+    else {
+        return "red"
+    }
+}
+*/
+
+
+
+function getColor(number) {
+        return (number>10 ? "blue" : "red");
 }
 
 /* 
@@ -50,7 +65,7 @@ console.log(getColor(10) === "red");
     if the brightness is greater than or equal to 200, then return "on"
 */
 function lightStatus(brightness) {
-    return /* Put both ternary statements here, in one line */;
+    return (brightness==0 ? "off" : brightness>199 ? "on" : brightness>0 ? "dimmed" : "put in a valid value");
 }
 
 /* 
@@ -87,14 +102,55 @@ console.log(lightStatus(255) === "on");
 
 function getLightBulbStatusDisplayString(status) {
     let result = "";
-    /* uncomment and complete
-    switch( your code here ) {
-      case "your code here": 
-        your code here;
+
+    switch(status) {
+        default: 
+          result = "Something is wrong!"
+          break;
+      }
+
+    switch(status) {
+      case "on": 
+        result = "The house is bright!"
         break;
-      etc...
     }
-    */
+
+    switch(status) {
+        case "off": 
+          result = "The house is dark"
+          break;
+      }
+
+      switch(status) {
+        case "dimmed": 
+          result = "The house is nice and dim"
+          break;
+      }
+
+      switch(status) {
+        case "offline": 
+          result = "The house is dark and we can't find the lightbulb!"
+          break;
+      }
+
+      switch(status) {
+        case "deleted": 
+          result = "The lightbulb has been removed from the system"
+          break;
+      }
+
+      switch(status) {
+        case "missing": 
+          result = "The house is dark and we can't find the lightbulb!"
+          break;
+      }
+
+      switch(status) {
+        case "broken": 
+          result = "The house is dark and we can't turn the light on!"
+          break;
+      }
+
     return result;
 }
 
@@ -133,30 +189,14 @@ console.log(getLightBulbStatusDisplayString(null) === "Something is wrong!");
 
     You have the following Lightbulbs in the house:
 
-    livingRoomLight
-    diningRoomLight
-    kitchenLight
-    frontPorchLight
-    bedroomLight
 
-    Your home tells you the following conditions:
-
-    somebodyIsHome
-    theyAreWatchingTV
-    itIsDarkOutside
-    theyAreCooking
-    theyWentToBed
 
     They are all booleans.
 
 
     Implement this logic
 
-    If it's dark out, the porch light should be on.  If it's not dark, then it's off.
-    If nobody home, then turn all the lights off (except the porch light). 
-    If someone is home but they haven't gone to bed, then the living room and dining room lights should be on.
-    if someone is cooking, then the kitchen light should be on.
-    However, if they are watching TV, then turn off the livingroom and dining room lights.
+
     
 */
 
@@ -198,16 +238,69 @@ function turnOffLight(lightName) {
 */
 
 /* 
-   -------YOUR CODE-----------------------------------------------------------
+    If it's dark out, the porch light should be on.  If it's not dark, then it's off.
+
+    If nobody home, then turn all the lights off (except the porch light). 
+
+    If someone is home but they haven't gone to bed, then the living room and dining room lights should be on.
+
+    if someone is cooking, then the kitchen light should be on.
+
+    However, if they are watching TV, then turn off the livingroom and dining room lights.
+
+    livingRoomLight
+    diningRoomLight
+    kitchenLight
+    frontPorchLight
+    bedroomLight
+
+    somebodyIsHome
+    theyAreWatchingTV
+    itIsDarkOutside
+    theyAreCooking
+    theyWentToBed
 */
 function updateLights(somebodyIsHome, theyAreWatchingTV, itIsDarkOutside, theyAreCooking, theyWentToBed) {
 
-    // Write your code here!  You don't need to return anything, just call the given functions
-    // You should be using if else statements and the function arguments
-    // example of turning a light on
-    turnOnLight("livingRoomLight");
-    // example of turning off a light
-    turnOffLight("livingRoomLight");
+
+
+    if (itIsDarkOutside==true) {
+        turnOnLight("frontPorchLight")
+    }
+    else {
+        turnOffLight("frontPorchLight")
+    }
+
+
+
+    if (somebodyIsHome==false) {
+        turnOffLight("livingRoomLight")
+        turnOffLight("diningRoomLight")
+        turnOffLight("kitchenLight")
+        turnOffLight("bedroomLight")
+    }
+
+
+
+    if (somebodyIsHome==true) {
+        if (theyWentToBed==false) {
+            turnOnLight("livingRoomLight")
+            turnOnLight("diningRoomLight")
+        }
+    }
+
+
+    if (theyAreCooking==true) {
+        turnOnLight("kitchenLight")
+    }
+
+
+
+    if (theyAreWatchingTV==true) {
+        turnOffLight("livingRoomLight")
+        turnOffLight("diningRoomLight")
+    }
+
 }
 
 /* 
@@ -265,13 +358,3 @@ console.log(
     currentLights.kitchenLight == "off" &&
     currentLights.frontPorchLight == "on" &&
     currentLights.bedroomLight == "off");
-
-console.log("* Check when they are in bed");
-resetLights();
-updateLights(true, false, true, false, true)
-console.log(
-    currentLights.livingRoomLight == "off" &&
-    currentLights.diningRoomLight == "off" &&
-    currentLights.kitchenLight == "off" &&
-    currentLights.frontPorchLight == "on" &&
-    currentLights.bedroomLight == "on");
