@@ -21,8 +21,7 @@
     otherwise return "red";
 */
 function getColor(number) {
-    // Uncomment and complete
-    return /* ( Your code Here ) ?  Your code Here  :  Your code Here */;
+    return (number > 10) ? "blue" : "red";
 }
 
 /* 
@@ -50,7 +49,13 @@ console.log(getColor(10) === "red");
     if the brightness is greater than or equal to 200, then return "on"
 */
 function lightStatus(brightness) {
-    return /* Put both ternary statements here, in one line */;
+    return brightness === 0
+        ? "off"
+        : brightness > 0 && brightness < 200
+            ? "dimmed"
+            : brightness >= 200
+                ? "on"
+                : "off";
 }
 
 /* 
@@ -70,11 +75,11 @@ console.log(lightStatus(255) === "on");
 /* ------------------------------------------------
     Exercise Three
 
-    Given a lightbulb's status, create a switch statement which returns 
+    Given a lightbulb's status, create a switch statement which returns
     a nicely formatted user readable string.
 
     A lightbulb can have any of the following statuses:
-    "on", "off", "dimmed", "offline", "deleted", "missing", "broken" 
+    "on", "off", "dimmed", "offline", "deleted", "missing", "broken"
 
     If the lightbulb is on, return "The house is bright!"
     If the lightbulb is dimmed, return "The house is nice and dim"
@@ -86,19 +91,35 @@ console.log(lightStatus(255) === "on");
 */
 
 function getLightBulbStatusDisplayString(status) {
-    let result = "";
-    /* uncomment and complete
-    switch( your code here ) {
-      case "your code here": 
-        your code here;
-        break;
-      etc...
+    let result;
+    switch (status) {
+        case "on":
+            result = "The house is bright!";
+            break;
+        case "off":
+            result = "The house is dark";
+            break;
+        case "dimmed":
+            result = "The house is nice and dim";
+            break;
+        case "offline":
+        case "missing":
+            result = "The house is dark and we can't find the lightbulb!";
+            break;
+        case "deleted":
+            result = "The lightbulb has been removed from the system";
+            break;
+        case "broken":
+            result = "The house is dark and we can't turn the light on!";
+            break;
+        default:
+            result = "Something is wrong!";
+            break;
     }
-    */
     return result;
 }
 
-/* 
+/*
    -------TESTS---------------------------------------------------------------
    Run these commands to make sure you did it right. They should all be true.
 */
@@ -126,44 +147,44 @@ console.log(getLightBulbStatusDisplayString(false) === "Something is wrong!");
 console.log("* Check for null");
 console.log(getLightBulbStatusDisplayString(null) === "Something is wrong!");
 
-/* ------------------------------------------------
-    Exercise Four
+// /* ------------------------------------------------
+//     Exercise Four
 
-    Now you need to write the logic for the entire home to control the lights.
+//     Now you need to write the logic for the entire home to control the lights.
 
-    You have the following Lightbulbs in the house:
+//     You have the following Lightbulbs in the house:
 
-    livingRoomLight
-    diningRoomLight
-    kitchenLight
-    frontPorchLight
-    bedroomLight
+//     livingRoomLight
+//     diningRoomLight
+//     kitchenLight
+//     frontPorchLight
+//     bedroomLight
 
-    Your home tells you the following conditions:
+//     Your home tells you the following conditions:
 
-    somebodyIsHome
-    theyAreWatchingTV
-    itIsDarkOutside
-    theyAreCooking
-    theyWentToBed
+//     somebodyIsHome
+//     theyAreWatchingTV
+//     itIsDarkOutside
+//     theyAreCooking
+//     theyWentToBed
 
-    They are all booleans.
+//     They are all booleans.
 
 
-    Implement this logic
+//     Implement this logic
 
-    If it's dark out, the porch light should be on.  If it's not dark, then it's off.
-    If nobody home, then turn all the lights off (except the porch light). 
-    If someone is home but they haven't gone to bed, then the living room and dining room lights should be on.
-    if someone is cooking, then the kitchen light should be on.
-    However, if they are watching TV, then turn off the livingroom and dining room lights.
-    If they are in bed, then the bedroom light should be on.
-*/
+//     If it's dark out, the porch light should be on.  If it's not dark, then it's off.
+//     If nobody home, then turn all the lights off (except the porch light). 
+//     If someone is home but they haven't gone to bed, then the living room and dining room lights should be on.
+//     if someone is cooking, then the kitchen light should be on.
+//     However, if they are watching TV, then turn off the livingroom and dining room lights.
+//     If they are in bed, then the bedroom light should be on.
+// */
 
-/*
-   -------START OF GIVEN CODE - DO NOT EDIT ------------------------------------
-   But do read through through this code.  Try to understand what it's doing.
-*/
+// /*
+//    -------START OF GIVEN CODE - DO NOT EDIT ------------------------------------
+//    But do read through through this code.  Try to understand what it's doing.
+// */
 
 let currentLights = {};
 function resetLights() {
@@ -202,12 +223,32 @@ function turnOffLight(lightName) {
 */
 function updateLights(somebodyIsHome, theyAreWatchingTV, itIsDarkOutside, theyAreCooking, theyWentToBed) {
 
-    // Write your code here!  You don't need to return anything, just call the given functions
-    // You should be using if else statements and the function arguments
-    // example of turning a light on
-    turnOnLight("livingRoomLight");
-    // example of turning off a light
-    turnOffLight("livingRoomLight");
+    if (!somebodyIsHome) {
+        turnOffLight("livingRoomLight");
+        turnOffLight("diningRoomLight");
+        turnOffLight("kitchenLight");
+        turnOffLight("bedroomLight");
+        turnOnLight("frontPorchLight");
+    } else {
+        if (!theyWentToBed) {
+            turnOnLight("livingRoomLight");
+            turnOnLight("diningRoomLight");
+        } else {
+            turnOnLight("bedroomLight");
+        }
+        if (theyAreCooking) {
+            turnOnLight("kitchenLight");
+        }
+        if (theyAreWatchingTV) {
+            turnOffLight("livingRoomLight");
+            turnOffLight("diningRoomLight");
+        }
+    }
+    if (itIsDarkOutside) {
+        turnOnLight("frontPorchLight");
+    } else {
+        turnOffLight ("frontPorchLight");
+    }
 }
 
 /* 
